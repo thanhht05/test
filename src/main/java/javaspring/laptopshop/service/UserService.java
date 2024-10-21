@@ -15,22 +15,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User handleSaveUser(User user) {
-        User newUser = this.userRepository.save(user);
-        return newUser;
-    }
-
-    public List<User> getAllUser() {
+    public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
-    public User getUserById(int id) {
+    public List<User> getAllUsersByEmail(String email) {
+        return this.userRepository.findOneByEmail(email);
+    }
+
+    public User handleSaveUser(User user) {
+        User eric = this.userRepository.save(user);
+        System.out.println(eric);
+        return eric;
+    }
+
+    public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
 
-    public void deleteUserById(int id) {
+    public void deleteAUser(long id) {
         this.userRepository.deleteById(id);
     }
-    
 
 }

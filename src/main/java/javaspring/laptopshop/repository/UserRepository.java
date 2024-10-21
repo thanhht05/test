@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 import javaspring.laptopshop.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    User save(User eric);
 
-    User save(User user);
+    void deleteById(long id);
+
+    List<User> findOneByEmail(String email);
 
     List<User> findAll();
 
-    User findById(int id);
-    
-    void deleteById(int id);
-
+    User findById(long id); // null
 }
