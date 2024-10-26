@@ -2,6 +2,7 @@ package javaspring.laptopshop.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,14 +21,13 @@ public class Role {
 
     private String description;
 
-    // role - one => many - users . ctrl + k . press 's'
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+
     private List<User> users;
 
     public long getId() {
         return id;
     }
-    
 
     public void setId(long id) {
         this.id = id;

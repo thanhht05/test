@@ -47,6 +47,15 @@
                                                         disabled="true" />
                                                 </div>
 
+                                                <div class="mb-3 ">
+                                                    <label class="form-label">Role:</label>
+                                                    <form:select class="form-select" path="role.name">
+                                                        <form:option value="ADMIN">ADMIN</form:option>
+                                                        <form:option value="USER">USER</form:option>
+                                                    </form:select>
+                                                </div>
+
+
                                                 <div class="mb-3">
                                                     <label class="form-label">Phone number:</label>
                                                     <form:input type="text" class="form-control" path="phone" />

@@ -67,7 +67,9 @@ public class UserController {
         hoidanit.setAvatar(avatar);
         hoidanit.setPassword(hashPassword);
 
-        hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
+        String roleName = hoidanit.getRole().getName();
+        hoidanit.setRole(this.userService.getRoleByName(roleName));
+
         this.userService.handleSaveUser(hoidanit);
         return "redirect:/admin/user";
     }
@@ -86,6 +88,7 @@ public class UserController {
             currentUser.setAddress(hoidanit.getAddress());
             currentUser.setFullName(hoidanit.getFullName());
             currentUser.setPhone(hoidanit.getPhone());
+            currentUser.setRole(hoidanit.getRole());
 
             // bug here
             this.userService.handleSaveUser(currentUser);
