@@ -31,7 +31,7 @@
                                     <div class="col-12 mx-auto">
                                         <div class="d-flex justify-content-between">
                                             <h3>Table users</h3>
-                                            <a href="/admin/user/create" class="btn btn-primary">Create a user</a>
+                                            <a href="/admin/user/create-user" class="btn btn-primary">Create a user</a>
                                         </div>
 
                                         <hr />

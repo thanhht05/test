@@ -27,17 +27,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> arrUsers = this.userService.getAllUsersByEmail("1@gmail.com");
-        System.out.println(arrUsers);
-
-        model.addAttribute("eric", "test");
-        model.addAttribute("hoidanit", "from controller with model");
-        return "hello";
-    }
-
-    @RequestMapping("/admin/user")
+    @GetMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users1", users);
@@ -52,13 +42,13 @@ public class UserController {
         return "admin/user/detail";
     }
 
-    @GetMapping("/admin/user/create") // GET
+    @GetMapping("/admin/user/create-user") // GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "admin/user/create";
+        return "admin/user/create-user";
     }
 
-    @PostMapping("/admin/user/create")
+    @PostMapping("/admin/user/create-user")
     public String createUserPage(Model model,
             @ModelAttribute("newUser") User hoidanit,
             @RequestParam("hoidanitFile") MultipartFile file) throws IOException {
@@ -74,7 +64,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @RequestMapping("/admin/user/update/{id}") // GET
+    @GetMapping("/admin/user/update/{id}") // GET
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currentUser);

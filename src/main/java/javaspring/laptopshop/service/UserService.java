@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import javaspring.laptopshop.domain.Product;
 import javaspring.laptopshop.domain.Role;
 import javaspring.laptopshop.domain.User;
+import javaspring.laptopshop.repository.ProductRepository;
 import javaspring.laptopshop.repository.RoleRepository;
 import javaspring.laptopshop.repository.UserRepository;
 
@@ -13,10 +15,13 @@ import javaspring.laptopshop.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ProductRepository productRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+            ProductRepository productRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.productRepository = productRepository;
     }
 
     public List<User> getAllUsers() {
@@ -43,6 +48,23 @@ public class UserService {
 
     public Role getRoleByName(String name) {
         return this.roleRepository.findByName(name);
+    }
+
+    public Product handleSaveProduct(Product product) {
+        Product productItem = this.productRepository.save(product);
+        return productItem;
+    }
+
+    public List<Product> getAllProduct() {
+        return this.productRepository.findAll();
+    }
+
+    public Product getProductById(long id) {
+        return this.productRepository.findById(id);
+    }
+
+    public void deleteProductBId(long id) {
+        this.productRepository.deleteById(id);
     }
 
 }
