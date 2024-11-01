@@ -19,6 +19,9 @@ public class UploadService {
     }
 
     public String handleUploadFile(MultipartFile file, String targetFolder) throws IOException {
+        if (file.isEmpty()) {
+            return "";
+        }
         String rootPath = this.servletContext.getRealPath("/resources/images");
         byte[] bytes = file.getBytes();
         String finalName = "";

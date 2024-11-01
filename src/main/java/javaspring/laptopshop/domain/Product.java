@@ -1,10 +1,21 @@
 package javaspring.laptopshop.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -13,12 +24,24 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
+    @Size(min = 2, message = "Tên sản phẩm phải tối thiểu 2 kí tự")
     private String name;
+
+    @NotNull
+    @DecimalMin(value = "1", message = "Please Enter a valid Deposit Amount")
     private double price;
     private String image;
+    @NotNull
+    @Column(columnDefinition = "MEDIUMTEXT ")
+    @Size(min = 2, message = "Mô tả tối thiểu 2 kí tự")
     private String detailDesc;
     private String shortDesc;
+
+    @NotNull
+    @Min(value = 1, message = "Số lượng cần lớn hơn hoặc bằng 1")
     private long quantity;
+
     private long sold;
     private String factory;
     private String target;

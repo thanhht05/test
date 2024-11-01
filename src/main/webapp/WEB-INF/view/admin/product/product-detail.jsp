@@ -42,10 +42,12 @@
 
                                             <hr />
 
-                                            <div class="card" style="width: 60%">
+                                            <div class="card" style="width: 50%">
                                                 <div class="card-header">
                                                     User information
                                                 </div>
+                                                <img src="/images/product/${product.image}" class="card-img-top"
+                                                    alt="img">
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item">ID: ${product.id}</li>
                                                     <li class="list-group-item">Name: ${product.name}</li>

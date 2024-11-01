@@ -50,21 +50,6 @@ public class UserService {
         return this.roleRepository.findByName(name);
     }
 
-    public Product handleSaveProduct(Product product) {
-        Product productItem = this.productRepository.save(product);
-        return productItem;
-    }
-
-    public List<Product> getAllProduct() {
-        return this.productRepository.findAll();
-    }
-
-    public Product getProductById(long id) {
-        return this.productRepository.findById(id);
-    }
-
-    public void deleteProductBId(long id) {
-        this.productRepository.deleteById(id);
-    }
+ 
 
 }
