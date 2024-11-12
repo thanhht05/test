@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javaspring.laptopshop.domain.Product;
 import javaspring.laptopshop.domain.Role;
 import javaspring.laptopshop.domain.User;
+import javaspring.laptopshop.domain.dto.RegisterDTO;
 import javaspring.laptopshop.repository.ProductRepository;
 import javaspring.laptopshop.repository.RoleRepository;
 import javaspring.laptopshop.repository.UserRepository;
@@ -15,13 +16,11 @@ import javaspring.laptopshop.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final ProductRepository productRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
             ProductRepository productRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.productRepository = productRepository;
     }
 
     public List<User> getAllUsers() {
@@ -50,6 +49,17 @@ public class UserService {
         return this.roleRepository.findByName(name);
     }
 
- 
+    public User registerDTOtoUser(RegisterDTO registerDTO) {
+        User user = new User();
+        user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        return user;
+    }
+
+    public boolean checkEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
+    
 
 }
