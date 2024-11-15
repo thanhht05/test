@@ -33,7 +33,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-floating mb-3 mb-md-0">
                                                                 <input class="form-control" id="email" type="email"
-                                                                    path="firstName" placeholder="Enter your Email" />
+                                                                    name="username" placeholder="Enter your Email" />
                                                                 <label for="email">Email</label>
                                                             </div>
                                                         </div>
@@ -42,7 +42,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-floating">
                                                                 <input class="form-control" id="inputLastName"
-                                                                    type="password" path="lastName"
+                                                                    type="password" name="password"
                                                                     placeholder="Enter your Password" />
                                                                 <label for="inputLastName">Password</label>
                                                             </div>
@@ -66,6 +66,16 @@
                                                             <button class="btn btn-info">
                                                                 Login </button>
                                                         </div>
+                                                    </div>
+                                                    <div>
+                                                        <input type="hidden" name="${_csrf.parameterName}"
+                                                            value="${_csrf.token}" />
+                                                    </div>
+                                                    <div>
+                                                        <c:if test="${param.error != null}">
+                                                            <div class="my-2" style="color: red;">Invalid email or
+                                                                password.</div>
+                                                        </c:if>
                                                     </div>
 
                                                 </form>
