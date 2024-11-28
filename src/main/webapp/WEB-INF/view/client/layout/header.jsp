@@ -2,7 +2,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-            <!-- Navbar start -->
+
             <div class="container-fluid fixed-top">
                 <div class="container px-0">
                     <nav class="navbar navbar-light bg-white navbar-expand-xl">
@@ -23,11 +23,13 @@
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
 
 
-                                    <a href="#" class="position-relative me-4 my-auto">
+                                    <a href="/cart" class="position-relative me-4 my-auto">
                                         <i class="fa fa-shopping-bag fa-2x"></i>
                                         <span
                                             class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                            style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                            style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                            ${sessionScope.sum}
+                                        </span>
                                     </a>
 
                                     <div class="dropdown position-relative">
@@ -78,4 +80,3 @@
                     </nav>
                 </div>
             </div>
-            <!-- Navbar End -->

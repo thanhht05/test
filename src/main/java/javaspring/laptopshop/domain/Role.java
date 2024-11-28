@@ -22,7 +22,6 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-
     private List<User> users;
 
     public long getId() {

@@ -19,6 +19,7 @@ import javaspring.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomepageController {
@@ -72,5 +73,7 @@ public class HomepageController {
         model.addAttribute("registerUser", new RegisterDTO());
         return "client/auth/deny";
     }
+
+    
 
 }

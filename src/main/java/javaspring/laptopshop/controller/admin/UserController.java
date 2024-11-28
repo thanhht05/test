@@ -59,7 +59,7 @@ public class UserController {
 
         
         if(newUserBindingResult.hasErrors()){
-            return"/admin/user/create-user";
+            return"admin/user/create-user";
         }
         String avatar = this.uploadService.handleUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());

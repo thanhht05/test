@@ -17,6 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import javaspring.laptopshop.domain.CartDetail;
 import javaspring.laptopshop.domain.User;
 import javaspring.laptopshop.service.UserService;
 
@@ -73,6 +74,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("email", user.getEmail());
+            int sum = user.getCart() == null ? 0 : user.getCart().getSum();
+            session.setAttribute("sum", sum);
+
         }
 
     }
