@@ -1,6 +1,5 @@
 package javaspring.laptopshop.controller.client;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +18,6 @@ import javaspring.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomepageController {
@@ -73,7 +71,5 @@ public class HomepageController {
         model.addAttribute("registerUser", new RegisterDTO());
         return "client/auth/deny";
     }
-
-    
 
 }
