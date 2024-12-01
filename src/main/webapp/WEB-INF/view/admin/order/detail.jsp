@@ -11,10 +11,29 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Order</title>
+                <title>orderDetail</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
+            <style>
+                .table-image {
+
+                    td,
+                    th {
+                        vertical-align: middle;
+                    }
+                }
+
+                table {
+                    table-layout: fixed;
+                    width: 120px;
+
+                }
+
+                td {
+                    width: 30px;
+                }
+            </style>
 
             <body class="sb-nav-fixed">
                 <jsp:include page="../layout/header.jsp" />
@@ -23,49 +42,59 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Manage Order</h1>
+                                <h1 class="mt-4">Manage orderDetail</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Order</li>
+                                    <li class="breadcrumb-item active">orderDetail</li>
                                 </ol>
                                 <div class="mt-5">
                                     <div class="row">
                                         <div class="col-12 mx-auto">
                                             <div class="d-flex justify-content-between">
-                                                <h3>Table order</h3>
+                                                <h3>Table orderDetail</h3>
                                             </div>
 
                                             <hr />
-                                            <table class=" table table-bordered table-hover">
+                                            <table class=" table table-hover table-image">
                                                 <thead>
                                                     <tr>
-                                                        <th>ID</th>
-                                                        <th>Total price</th>
-                                                        <th>User</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
+                                                        <th scope="col">Sản phẩm</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Giá cả</th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Thành tiền</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <c:forEach var="order" items="${order}">
 
-                                                        <tr>
-                                                            <th>${order.id}</th>
+                                                <tbody>
+                                                    <c:forEach var="orderDetail" items="${orderDetails}">
+
+                                                        <tr class="pb-3">
+                                                            <td>
+                                                                <div>
+                                                                    <img style="width: 100%;"
+                                                                        src="/images/product/${orderDetail.product.image}"
+                                                                        alt="">
+
+                                                                </div>
+                                                            </td>
+                                                            <td><a
+                                                                    href="/product/${orderDetail.product.id}">${orderDetail.product.name}</a>
+                                                            </td>
                                                             <td>
 
-                                                                <fmt:formatNumber value="${order.totalPrice}"
+                                                                <fmt:formatNumber value="${orderDetail.price}"
                                                                     type="number" currencySymbol="$" />đ
                                                             </td>
-                                                            <td>${order.user.role.name}</td>
-                                                            <td>${order.status}</td>
+                                                            <td>${orderDetail.quantity}</td>
                                                             <td>
-                                                                <a href="/admin/order/${order.id}"
-                                                                    class="btn btn-success">View</a>
-                                                                <a href="/admin/order/update/${order.id}"
-                                                                    class="btn btn-warning  mx-2">Update</a>
-                                                                <a href="/admin/order/delete/${order.id}"
-                                                                    class="btn btn-danger">Delete</a>
+                                                                <fmt:formatNumber
+                                                                    value="${orderDetail.quantity * orderDetail.price}"
+                                                                    type="number" currencySymbol="$" />đ
+
                                                             </td>
+
+
                                                         </tr>
 
                                                     </c:forEach>

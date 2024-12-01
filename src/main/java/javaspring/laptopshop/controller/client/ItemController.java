@@ -109,16 +109,17 @@ public class ItemController {
             @RequestParam("receiverName") String receiverName,
             @RequestParam("receiverAddress") String receiverAddress,
             @RequestParam("receiverPhone") String receiverPhone) {
-
         HttpSession session = request.getSession(false);
-        return "redirect:/";
+        User user = new User();
+        long id = (long) session.getAttribute("id");
+        user.setId(id);
+        this.productService.handlePlaceOrder(user, session, receiverName, receiverAddress, receiverAddress);
+        return "redirect:/thank";
     }
-    // @PostMapping("/place-order")
-    // public String postMethodName(@RequestBody String entity) {
-    //     //TODO: process POST request
-        
-    //     return entity;
-    // }
-    
+
+    @GetMapping("/thank")
+    public String getMethodName(Model model) {
+        return "client/cart/thank";
+    }
 
 }
