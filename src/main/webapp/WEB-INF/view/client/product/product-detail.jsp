@@ -7,7 +7,7 @@
 
             <head>
                 <meta charset="utf-8">
-                <title>Fruitables - Vegetable Website Template</title>
+                <title>Laptop-Shop</title>
                 <meta content="width=device-width, initial-scale=1.0" name="viewport">
                 <meta content="" name="keywords">
                 <meta content="" name="description">
@@ -121,7 +121,13 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <form action="/add-product-to-cart/${productItem.id}" method="post">
+                                        <form action="/add-product-from-view-detail" method="post"
+                                            modelAttribute="productItem">
+                                            <input class="form-control d-none" type="number" name="id"
+                                                value="${productItem.id}" />
+                                            <input class="form-control d-none" type="text" name="quantity"
+                                                id="cartDetails0.quantity" />
+
 
                                             <button
                                                 class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i

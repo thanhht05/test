@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import javaspring.laptopshop.domain.Order;
 import javaspring.laptopshop.domain.OrderDetail;
+import javaspring.laptopshop.domain.User;
 import javaspring.laptopshop.repository.OrderDetailRepository;
 import javaspring.laptopshop.repository.OrderRepository;
 
@@ -24,4 +26,9 @@ public class OrderService {
         }
         this.orderRepository.deleteById(id);
     }
+
+    public List<Order> handleFindOrderByUser(User user) {
+        return this.orderRepository.getAllOrderByUser(user);
+    }
+
 }
