@@ -1,7 +1,11 @@
 package javaspring.laptopshop.controller.client;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +22,7 @@ import javaspring.laptopshop.service.ProductService;
 import javaspring.laptopshop.service.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -39,9 +44,24 @@ public class HomepageController {
     }
 
     @GetMapping("/")
-    public String getMethodName(Model model) {
-        List<Product> products = this.productService.getAllProduct();
-        model.addAttribute("products", products);
+    public String getMethodName(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int currentPage = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                currentPage = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(currentPage - 1, 10);
+        Page<Product> prs = this.productService.getAllProduct(pageable);
+        List<Product> listProducts = prs.getContent();
+        int totalPage = prs.getTotalPages();
+
+        model.addAttribute("products", listProducts);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("currentPage", currentPage);
         return "client/homepage/show";
     }
 

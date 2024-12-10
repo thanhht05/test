@@ -3,6 +3,9 @@ package javaspring.laptopshop.controller.admin;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,38 +20,48 @@ import javaspring.laptopshop.service.OrderService;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class OrderController {
-    private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final OrderService orderService;
 
-    public OrderController(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository,
+    public OrderController(OrderDetailRepository orderDetailRepository,
             OrderService orderService) {
-        this.orderRepository = orderRepository;
         this.orderDetailRepository = orderDetailRepository;
         this.orderService = orderService;
     }
 
     @GetMapping("/admin/order")
-    public String getOrderPage(Model model) {
-        List<Order> orders = this.orderRepository.findAll();
-        model.addAttribute("order", orders);
+    public String getOrderPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+
+        int currentPage = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                currentPage = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+
+        }
+        Pageable pageable = PageRequest.of(currentPage - 1, 5);
+        // Page<Order> orders = this.orderRepository.findAll(pageable);
+        Page<Order> orders = this.orderService.getAll(pageable);
+
+        List<Order> listOrder = orders.getContent();
+        int totalPage = orders.getTotalPages();
+
+        model.addAttribute("order", listOrder);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPage", totalPage);
         return "admin/order/show";
     }
 
     @GetMapping("/admin/order/{id}")
     public String getMethodName(Model model, @PathVariable long id) {
-        Optional<Order> order = this.orderRepository.findById(id);
-        Order order2 = null;
-        if (order.isPresent()) {
-            order2 = order.get();
-        }
-        
-        List<OrderDetail> orderDetails = this.orderDetailRepository.findByOrder(order2);
-        
+        // Optional<Order> order = this.orderRepository.findById(id);
+        Order order = this.orderService.findById(id);
+
+        List<OrderDetail> orderDetails = this.orderDetailRepository.findByOrder(order);
 
         model.addAttribute("orderDetails", orderDetails);
 
@@ -57,21 +70,19 @@ public class OrderController {
 
     @GetMapping("/admin/order/update/{id}")
     public String getUpdatePage(Model model, @PathVariable long id) {
-        Optional<Order> order = this.orderRepository.findById(id);
-        Order otherOrder = (order.isPresent()) ? order.get() : null;
+        Order order = this.orderService.findById(id);
 
-        model.addAttribute("order", otherOrder);
+        model.addAttribute("order", order);
         return "admin/order/update";
     }
 
     @PostMapping("/admin/order/update")
     public String postMethodName(Model model, @ModelAttribute("order") Order order) {
-        Optional<Order> currentOrder = this.orderRepository.findById(order.getId());
-        Order realOrder = (currentOrder.isPresent()) ? currentOrder.get() : null;
-        if (realOrder != null) {
+        Order currentOrder = this.orderService.findById(order.getId());
+        if (currentOrder != null) {
 
-            realOrder.setStatus(order.getStatus());
-            this.orderRepository.save(realOrder);
+            currentOrder.setStatus(order.getStatus());
+            this.orderService.saveOrder(currentOrder);
         }
 
         return "redirect:/admin/order";

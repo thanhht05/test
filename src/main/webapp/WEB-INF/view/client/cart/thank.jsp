@@ -9,6 +9,7 @@
 
 <body>
     <h1>Dat hang thanh cong</h1>
+    <a href="/">Back</a>
 </body>
 
 </html>

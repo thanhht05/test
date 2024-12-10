@@ -2,7 +2,11 @@ package javaspring.laptopshop.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
+import javaspring.laptopshop.domain.Product;
 import javaspring.laptopshop.domain.User;
 import javaspring.laptopshop.service.UploadService;
 import javaspring.laptopshop.service.UserService;
@@ -31,9 +36,28 @@ public class UserController {
     }
 
     @GetMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users1", users);
+    public String getUserPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int currentPage = 1;
+
+        try {
+            if (pageOptional.isPresent()) {
+                currentPage = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+
+        }
+
+        Pageable pageable = PageRequest.of(currentPage - 1, 2);
+
+        Page<User> pages = this.userService.getAllUsers(pageable);
+
+        List<User> listUsers = pages.getContent();
+
+        int totalPage = pages.getTotalPages();
+
+        model.addAttribute("users1", listUsers);
+        model.addAttribute("totalPages", totalPage);
+        model.addAttribute("currentPage", currentPage);
         return "admin/user/show";
     }
 
@@ -57,9 +81,8 @@ public class UserController {
             BindingResult newUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) throws IOException {
 
-        
-        if(newUserBindingResult.hasErrors()){
-            return"admin/user/create-user";
+        if (newUserBindingResult.hasErrors()) {
+            return "admin/user/create-user";
         }
         String avatar = this.uploadService.handleUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());

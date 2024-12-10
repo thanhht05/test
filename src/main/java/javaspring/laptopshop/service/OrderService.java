@@ -2,6 +2,8 @@ package javaspring.laptopshop.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javaspring.laptopshop.domain.Order;
@@ -29,6 +31,19 @@ public class OrderService {
 
     public List<Order> handleFindOrderByUser(User user) {
         return this.orderRepository.getAllOrderByUser(user);
+    }
+
+    public Page<Order> getAll(Pageable pageable) {
+        return this.orderRepository.findAll(pageable);
+    }
+
+    public Order findById(long id) {
+        return this.orderRepository.getOrderById(id);
+    }
+
+    public Order saveOrder(Order order) {
+        Order order2 = this.orderRepository.save(order);
+        return order2;
     }
 
 }
